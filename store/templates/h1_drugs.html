@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>H1 Drugs - Medical Store Management System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+        }
+
+        .navbar {
+            background: #087f8c;
+            color: white;
+            padding: 18px 50px;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 13px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 12px 25px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Medical Store Management System</h2>
+</div>
+
+<div class="container">
+
+    <h1>H1 Drugs Records</h1>
+
+    {% if drugs %}
+
+    <table>
+
+        <tr>
+            <th>Drug Name</th>
+            <th>Batch Number</th>
+            <th>Quantity</th>
+            <th>Supplier</th>
+            <th>Received Date</th>
+            <th>Expiry Date</th>
+            <th>Remarks</th>
+        </tr>
+
+        {% for drug in drugs %}
+
+        <tr>
+            <td>{{ drug.drug_name }}</td>
+            <td>{{ drug.batch_number }}</td>
+            <td>{{ drug.quantity_received }}</td>
+            <td>{{ drug.supplier }}</td>
+            <td>{{ drug.received_date }}</td>
+            <td>{{ drug.expiry_date }}</td>
+            <td>{{ drug.remarks }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p style="text-align:center;">
+        No H1 drug records available.
+    </p>
+
+    {% endif %}
+
+    <a href="/" class="back">← Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Billing History</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+        }
+
+        .navbar {
+            background: #087f8c;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 13px;
+        }
+
+        td {
+            padding: 13px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 11px 20px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Medical Store Management System</h2>
+</div>
+
+<div class="container">
+
+    <h1>Billing History</h1>
+
+    {% if bills %}
+
+    <table>
+
+        <tr>
+            <th>Bill No</th>
+            <th>Customer</th>
+            <th>Medicine</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Date</th>
+        </tr>
+
+        {% for bill in bills %}
+
+        <tr>
+            <td>{{ bill.bill_number }}</td>
+            <td>{{ bill.customer_name }}</td>
+            <td>{{ bill.medicine.name }}</td>
+            <td>{{ bill.quantity }}</td>
+            <td>₹{{ bill.total_price }}</td>
+            <td>{{ bill.bill_date }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p style="text-align:center;">
+        No bills available.
+    </p>
+
+    {% endif %}
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales - Medical Store Management System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+        }
+
+        .navbar {
+            background: #087f8c;
+            padding: 18px 50px;
+            color: white;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .medicine-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .medicine-preview img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #087f8c;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #056873;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #087f8c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<script>
+
+function showMedicineImage() {
+
+    var select = document.getElementById("medicineSelect");
+
+    var selectedOption = select.options[select.selectedIndex];
+
+    var image = selectedOption.getAttribute("data-image");
+
+    var preview = document.getElementById("medicinePreview");
+
+    var medicineImage = document.getElementById("medicineImage");
+
+    if (image) {
+
+        medicineImage.src = image;
+
+        preview.style.display = "block";
+
+    } else {
+
+        preview.style.display = "none";
+
+    }
+}
+
+</script>
+<body>
+
+    <div class="navbar">
+        <h2>Medical Store Management System</h2>
+    </div>
+
+    <div class="container">
+
+        <h1>Medicine Sale</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Customer Name</label>
+
+            <input
+                type="text"
+                name="customer_name"
+                placeholder="Enter customer name"
+                required
+            >
+
+            <label>Select Medicine</label>
+
+             <select name="medicine" id="medicineSelect" required onchange="showMedicineImage()">
+
+    <option value="">-- Select Medicine --</option>
+
+    {% for medicine in medicines %}
+
+        <option value="{{ medicine.id }}"
+                data-image="{% if medicine.image %}{{ medicine.image.url }}{% endif %}">
+            {{ medicine.name }} - ₹{{ medicine.price }}
+            (Stock: {{ medicine.stock }})
+        </option>
+
+    {% endfor %}
+
+</select>
+
+<div id="medicinePreview" style="display:none; text-align:center; margin-top:20px;">
+
+    <img id="medicineImage"
+         src=""
+         alt="Medicine Image"
+         width="120"
+         height="120"
+         style="object-fit:cover; border-radius:10px; border:2px solid #087f8c;">
+
+</div>
+            <label>Quantity</label>
+
+            <input
+                type="number"
+                name="quantity"
+                min="1"
+                required
+            >
+
+            <button type="submit">
+                Generate Bill
+            </button>
+
+        </form>
+
+        <a href="/" class="back">← Back to Home</a>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales History</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 15px #ccc;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Sales History</h1>
+
+    {% if sales %}
+
+    <table>
+
+        <tr>
+            <th>Customer</th>
+            <th>Medicine</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Date</th>
+        </tr>
+
+        {% for sale in sales %}
+
+        <tr>
+            <td>{{ sale.customer_name }}</td>
+            <td>{{ sale.medicine.name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>₹{{ sale.total_price }}</td>
+            <td>{{ sale.sale_date|date:"d-m-Y H:i" }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <div class="empty">
+        No sales records available.
+    </div>
+
+    {% endif %}
+
+    <a href="/" class="back">← Back to Home</a>
+
+</div>
+
+</body>
+</html>

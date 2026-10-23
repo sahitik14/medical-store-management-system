@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Medicine</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+        }
+
+        .navbar {
+            background: #087f8c;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #056873;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #087f8c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Medical Store Management System</h2>
+</div>
+
+<div class="container">
+
+    <h1>Book Medicine</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Customer Name</label>
+        <input
+            type="text"
+            name="customer_name"
+            placeholder="Enter customer name"
+            required
+        >
+
+        <label>Mobile Number</label>
+        <input
+            type="tel"
+            name="mobile"
+            placeholder="Enter mobile number"
+            required
+        >
+
+        <label>Email Address</label>
+
+<input
+    type="email"
+    name="email"
+    placeholder="Enter email address"
+    required
+>
+   
+        <label>Address</label>
+        <textarea
+            name="address"
+            placeholder="Enter delivery address"
+            required
+        ></textarea>
+
+        <label>Select Medicine</label>
+
+        <select name="medicine" required>
+
+            <option value="">
+                -- Select Medicine --
+            </option>
+
+            {% for medicine in medicines %}
+
+            <option value="{{ medicine.id }}">
+                {{ medicine.name }} - ₹{{ medicine.price }}
+                (Stock: {{ medicine.stock }})
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <label>Quantity</label>
+
+        <input
+            type="number"
+            name="quantity"
+            min="1"
+            required
+        >
+
+        <button type="submit">
+            Book Medicine
+        </button>
+
+    </form>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

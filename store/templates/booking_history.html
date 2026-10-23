@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Booking History</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #087f8c;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .container {
+            width: 92%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f8c;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 13px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status {
+            background: #e8f7e8;
+            color: green;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 11px 20px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="navbar">
+
+        <h2>
+            Medical Store Management System
+        </h2>
+
+    </div>
+
+
+    <div class="container">
+
+        <h1>
+            Medicine Booking History
+        </h1>
+
+
+        {% if bookings %}
+
+        <table>
+
+            <tr>
+
+                <th>Customer</th>
+
+                <th>Mobile</th>
+
+                <th>Email</th>
+
+                <th>Medicine</th>
+
+                <th>Quantity</th>
+
+                <th>Booking Date</th>
+
+                <th>Status</th>
+
+            </tr>
+
+
+            {% for booking in bookings %}
+
+            <tr>
+
+                <td>
+                    {{ booking.customer_name }}
+                </td>
+
+                <td>
+                    {{ booking.mobile }}
+                </td>
+
+                <td>
+                    {{ booking.email }}
+                </td>
+
+                <td>
+                    {{ booking.medicine.name }}
+                </td>
+
+                <td>
+                    {{ booking.quantity }}
+                </td>
+
+                <td>
+                    {{ booking.booking_date }}
+                </td>
+
+                <td>
+                    <span class="status">
+                        {{ booking.status }}
+                    </span>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+        {% else %}
+
+        <p style="text-align:center;">
+            No medicine bookings available.
+        </p>
+
+        {% endif %}
+
+
+        <a href="/" class="back">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+
+</html>

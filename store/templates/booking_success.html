@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Successful</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f9f9;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .box {
+            background: white;
+            width: 500px;
+            max-width: 90%;
+            margin: auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #087f8c;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>Medicine Booked Successfully!</h1>
+
+    <p>
+        Thank you, {{ customer_name }}.
+    </p>
+
+    <p>
+        Medicine: <strong>{{ medicine.name }}</strong>
+    </p>
+
+    <p>
+        Quantity: <strong>{{ quantity }}</strong>
+    </p>
+
+    <a href="/">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

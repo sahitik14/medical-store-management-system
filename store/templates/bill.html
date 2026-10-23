@@ -1,0 +1,334 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medicine Bill</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f6f8;
+            color: #333;
+        }
+
+        .navbar {
+            background: #087f8c;
+            color: white;
+            padding: 20px 50px;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .bill-container {
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+        }
+
+        .store-header {
+            text-align: center;
+            border-bottom: 2px solid #087f8c;
+            padding-bottom: 20px;
+        }
+
+        .store-header h1 {
+            margin: 0;
+            color: #087f8c;
+        }
+
+        .store-header p {
+            margin: 6px 0;
+            color: #777;
+        }
+
+        .bill-title {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .bill-title h2 {
+            color: #333;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .detail-box {
+            background: #f5f9fa;
+            padding: 15px;
+            border-radius: 7px;
+        }
+
+        .detail-box strong {
+            color: #087f8c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .total-row td {
+            font-size: 19px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .buttons a,
+        .buttons button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .print-btn {
+            background: #087f8c;
+            color: white;
+        }
+
+        .back-btn {
+            background: #e8eeee;
+            color: #087f8c;
+        }
+
+        .print-btn:hover {
+            background: #056873;
+        }
+
+        .back-btn:hover {
+            background: #d8e5e6;
+        }
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .navbar,
+            .buttons {
+                display: none;
+            }
+
+            .bill-container {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .bill-container {
+                padding: 20px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2>Medical Store Management System</h2>
+    </div>
+
+
+    <div class="bill-container">
+
+        <!-- STORE HEADER -->
+
+        <div class="store-header">
+
+            <h1>Medical Store</h1>
+
+            <p>Medical Store Management System</p>
+
+            <p>Medicine Sales & Billing</p>
+
+        </div>
+
+
+        <!-- BILL TITLE -->
+
+        <div class="bill-title">
+
+            <h2>MEDICINE BILL</h2>
+
+        </div>
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="details">
+
+            <div class="detail-box">
+
+                <strong>Bill Number:</strong>
+
+                {{ bill.bill_number }}
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <strong>Customer Name:</strong>
+
+                {{ bill.customer_name }}
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <strong>Bill Date:</strong>
+
+                {{ bill.bill_date }}
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <strong>Medicine:</strong>
+
+                {{ bill.medicine.name }}
+
+            </div>
+
+        </div>
+
+
+        <!-- BILL TABLE -->
+
+        <table>
+
+            <tr>
+
+                <th>Medicine</th>
+
+                <th>Quantity</th>
+
+                <th>Price</th>
+
+                <th>Total</th>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    {{ bill.medicine.name }}
+                </td>
+
+                <td>
+                    {{ bill.quantity }}
+                </td>
+
+                <td>
+                    ₹{{ bill.medicine.price }}
+                </td>
+
+                <td>
+                    ₹{{ bill.total_price }}
+                </td>
+
+            </tr>
+
+
+            <tr class="total-row">
+
+                <td colspan="3">
+                    Grand Total
+                </td>
+
+                <td>
+                    ₹{{ bill.total_price }}
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button
+                class="print-btn"
+                onclick="window.print()">
+                🖨 Print Bill
+            </button>
+
+
+            <a
+                href="/billing-history/"
+                class="back-btn">
+                Billing History
+            </a>
+
+
+            <a
+                href="/"
+                class="back-btn">
+                Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+```
