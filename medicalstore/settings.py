@@ -28,18 +28,15 @@ MAILERS = {
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&isz)-)lrp4wlce-2l1lz#&-uk-rfr3))=p1b=q8)dc&r^t)mh'
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY',
-    'django-insecure-local-development-key-123456789'
-)
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-development-key-123456789')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.onrender.com',
     'medical-store-management-system-py6g.onrender.com',
 ]
 # Application definition
