@@ -1,0 +1,152 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>H1 Drug Sale</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef7f5;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #176b5b;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #176b5b;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d5145;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #176b5b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>H1 Drug Sale</h1>
+
+    <div class="subtitle">
+        Medical Store Management System
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Customer Name</label>
+        <input
+            type="text"
+            name="customer_name"
+            placeholder="Enter customer name"
+            required
+        >
+
+        <label>Select H1 Drug</label>
+
+        <select name="drug" required>
+            <option value="">-- Select H1 Drug --</option>
+
+            {% for drug in drugs %}
+                <option value="{{ drug.id }}">
+                    {{ drug.drug_name }}
+                    - Batch: {{ drug.batch_number }}
+                    - Stock: {{ drug.quantity_received }}
+                </option>
+            {% empty %}
+                <option value="">No H1 drugs available</option>
+            {% endfor %}
+
+        </select>
+
+        <label>Quantity</label>
+        <input
+            type="number"
+            name="quantity"
+            min="1"
+            placeholder="Enter quantity"
+            required
+        >
+
+        <label>Sale Price</label>
+        <input
+            type="number"
+            name="sale_price"
+            step="0.01"
+            min="0"
+            placeholder="Enter sale price"
+            required
+        >
+
+        <button type="submit">
+            Sell H1 Drug & Generate Bill
+        </button>
+
+    </form>
+
+    <a href="/" class="back">
+        ← Back to Home
+    </a>
+
+</div>
+
+</body>
+</html>
+```

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H1 Drug Sale Bill</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 30px;
+        }
+
+        .bill {
+            width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .details {
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        button {
+            display: block;
+            margin: 25px auto;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bill">
+
+    <h1>H1 Drug Sale Bill</h1>
+
+    <hr>
+
+    <div class="details">
+
+        <p>
+            <b>Customer Name:</b>
+            {{ bill.customer_name }}
+        </p>
+
+        <p>
+    <b>Drug:</b>
+    {{ bill.drug }}
+</p>
+
+        <p>
+            <b>Quantity:</b>
+            {{ bill.quantity }}
+        </p>
+
+        <p>
+            <b>Sale Price:</b>
+            ₹{{ bill.sale_price }}
+        </p>
+
+        <p>
+            <b>Date:</b>
+            {{ bill.sale_date }}
+        </p>
+
+    </div>
+
+    <hr>
+
+    <div class="total">
+        Total Amount: ₹{{ bill.total_price }}
+    </div>
+
+    <button onclick="window.print()">
+        Print Bill
+    </button>
+
+</div>
+
+</body>
+</html>

@@ -49,6 +49,17 @@ class H1Drug(models.Model):
     def __str__(self):
         return self.drug_name
 
+class H1Sale(models.Model):
+    bill_number = models.AutoField(primary_key=True)
+    customer_name = models.CharField(max_length=100)
+    drug = models.ForeignKey(H1Drug, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    sale_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    sale_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.bill_number)
 
 class MedicineBooking(models.Model):
     customer_name = models.CharField(max_length=100)

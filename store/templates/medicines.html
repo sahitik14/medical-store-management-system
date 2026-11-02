@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,21 +33,57 @@
         h1 {
             text-align: center;
             color: #087f8c;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
+        /* Search */
+        .search-box {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .search-box input {
+            width: 55%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 12px 22px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-box button:hover {
+            background: #066b76;
+        }
+
+        /* Medicine Grid */
         .medicine-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
         }
 
+        /* Medicine Card */
         .medicine-card {
             background: white;
             border-radius: 12px;
             padding: 20px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
         }
 
         .medicine-image {
@@ -82,9 +119,26 @@
         .price {
             font-size: 20px;
             font-weight: bold;
-            color: #087f8c;
+            color: #087f8c !important;
         }
 
+        /* Book Button */
+        .book-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .book-btn:hover {
+            background: #065f68;
+        }
+
+        /* Back Button */
         .back {
             display: block;
             width: fit-content;
@@ -96,9 +150,25 @@
             border-radius: 6px;
         }
 
+        .back:hover {
+            background: #065f68;
+        }
+
+        /* Empty Message */
+        .empty-message {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+        }
+
+        /* Responsive */
         @media (max-width: 800px) {
             .medicine-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-box input {
+                width: 60%;
             }
         }
 
@@ -106,26 +176,51 @@
             .medicine-grid {
                 grid-template-columns: 1fr;
             }
+
+            .search-box input {
+                width: 90%;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Navbar -->
     <div class="navbar">
         <h2>Medical Store Management System</h2>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
 
         <h1>Available Medicines</h1>
 
+        <!-- Search -->
+        <form method="GET" class="search-box">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search medicine..."
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+        <!-- Medicine Cards -->
         <div class="medicine-grid">
 
             {% for medicine in medicines %}
 
             <div class="medicine-card">
 
+                <!-- Medicine Image -->
                 {% if medicine.image %}
 
                     <img
@@ -142,81 +237,76 @@
 
                 {% endif %}
 
-                <h2>{{ medicine.name }}</h2>
+                <!-- Medicine Name -->
+                <h2>
+                    {{ medicine.name }}
+                </h2>
 
+                <!-- Category -->
                 <p>
                     <strong>Category:</strong>
                     {{ medicine.category }}
                 </p>
 
+                <!-- Manufacturer -->
                 <p>
                     <strong>Manufacturer:</strong>
                     {{ medicine.manufacturer }}
                 </p>
 
+                <!-- Price -->
                 <p class="price">
                     ₹{{ medicine.price }}
                 </p>
 
+                <!-- Stock -->
                 <p>
                     <strong>Stock:</strong>
                     {{ medicine.stock }}
                 </p>
 
+                <!-- Expiry -->
                 <p>
                     <strong>Expiry:</strong>
                     {{ medicine.expiry_date }}
                 </p>
 
+                <!-- Book Medicine Button -->
+                {% if medicine.stock > 0 %}
+
+                    <a
+                        href="{% url 'book_medicine' %}?medicine={{ medicine.id }}"
+                        class="book-btn"
+                    >
+                        Book Medicine
+                    </a>
+
+                {% else %}
+
+                    <p style="color:red; font-weight:bold;">
+                        Out of Stock
+                    </p>
+
+                {% endif %}
+
             </div>
 
             {% empty %}
 
-            <p style="text-align:center;">
-                No medicines available.
-            </p>
+                <p class="empty-message">
+                    No medicines available.
+                </p>
 
             {% endfor %}
 
         </div>
 
+        <!-- Back Home -->
         <a href="/" class="back">
             ← Back to Home
         </a>
 
     </div>
-
-    <form method="GET" style="text-align:center; margin-bottom:30px;">
-
-    <input
-        type="text"
-        name="search"
-        value="{{ search }}"
-        placeholder="Search medicine..."
-        style="
-            width:60%;
-            padding:12px;
-            border:1px solid #ccc;
-            border-radius:6px;
-            font-size:16px;
-        "
-    >
-
-    <button
-        type="submit"
-        style="
-            padding:12px 22px;
-            background:#087f8c;
-            color:white;
-            border:none;
-            border-radius:6px;
-            cursor:pointer;
-        "
-    >
-        Search
-    </button>
-
-</form>
 
 </body>
 </html>
