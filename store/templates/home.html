@@ -1,11 +1,13 @@
-```html
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Store Management</title>
 
-    <title>Medical Store Management System</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
 
     <style>
         * {
@@ -16,164 +18,138 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f7fb;
-            color: #333;
         }
 
-        /* SIDEBAR */
-
         .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
             width: 240px;
             height: 100vh;
             background: #087f8c;
             color: white;
-            padding: 25px 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            padding: 20px 0;
         }
 
-        .logo {
+        .brand {
             text-align: center;
             margin-bottom: 35px;
         }
 
-        .logo h2 {
-            margin: 0;
-            font-size: 22px;
+        .brand h2 {
+            margin-bottom: 5px;
         }
 
-        .logo p {
-            margin-top: 7px;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .menu a {
+        .sidebar a {
             display: block;
             color: white;
             text-decoration: none;
-            padding: 13px 18px;
-            margin: 6px 0;
-            border-radius: 8px;
-            transition: 0.3s;
+            padding: 15px 25px;
+            font-size: 16px;
         }
 
-        .menu a:hover {
-            background: rgba(255,255,255,0.18);
-            transform: translateX(4px);
+        .sidebar a:hover {
+            background: #05636d;
         }
 
-        /* MAIN */
-
-        .main {
+        .main-content {
             margin-left: 240px;
-            padding: 30px;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 20px 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .topbar h1 {
-            margin: 0;
-            color: #087f8c;
-            font-size: 28px;
-        }
-
-        .topbar p {
-            margin: 6px 0 0;
-            color: #777;
+            padding: 25px 30px;
         }
 
         .welcome {
-            font-weight: bold;
-            color: #087f8c;
+            background: white;
+            padding: 22px 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
-        /* STATISTICS */
+        .welcome h1 {
+            color: #087f8c;
+            margin: 0 0 8px;
+        }
 
-        .stats {
+        .welcome p {
+            margin: 0;
+            color: #777;
+        }
+
+        .stats-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-top: 25px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
             background: white;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            border-left: 5px solid #087f8c;
+            border-radius: 14px;
+            border-left: 5px solid #008b99;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
         }
 
         .stat-card h3 {
-            margin: 0;
+            font-size: 16px;
             color: #666;
-            font-size: 15px;
         }
 
-        .stat-number {
-            margin-top: 12px;
-            font-size: 32px;
-            font-weight: bold;
+        .stat-card h2 {
+            font-size: 30px;
             color: #087f8c;
+            margin: 12px 0;
         }
 
         .stat-card p {
-            margin-bottom: 0;
-            color: #999;
+            color: #888;
             font-size: 13px;
         }
-
-        /* SECTION */
 
         .section {
             background: white;
-            margin-top: 25px;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            overflow-x: auto;
         }
 
-        .section-header {
+        .section-heading {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
 
-        .section-header h2 {
-            margin: 0;
+        .section-heading h2 {
             color: #087f8c;
+            margin: 0;
         }
 
-        .view-btn {
-            text-decoration: none;
+        .action-btn {
             background: #087f8c;
             color: white;
-            padding: 9px 15px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 10px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+            display: inline-block;
         }
-
-        /* LOW STOCK TABLE */
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            min-width: 550px;
         }
 
         th {
             background: #087f8c;
             color: white;
-            padding: 13px;
+            padding: 14px;
             text-align: left;
         }
 
@@ -187,97 +163,61 @@
             font-weight: bold;
         }
 
-        /* QUICK ACTIONS */
-
-        .quick-actions {
+        .actions-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-top: 25px;
         }
 
         .action-card {
             background: white;
             padding: 25px;
-            border-radius: 12px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .action-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .icon {
-            font-size: 35px;
-            margin-bottom: 12px;
+        .card-icon {
+            font-size: 38px;
+            margin-bottom: 10px;
         }
 
         .action-card h3 {
-            color: #087f8c;
-            margin: 8px 0;
+            color: #008b99;
         }
 
-        .action-card p {
-            color: #777;
-            font-size: 14px;
-            min-height: 35px;
-        }
-
-        .action-card a {
-            display: inline-block;
+        .action-card .action-btn {
             margin-top: 10px;
-            padding: 10px 18px;
-            background: #087f8c;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
         }
 
-        .action-card a:hover {
-            background: #056873;
-        }
-
-        /* FOOTER */
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: #888;
-            font-size: 13px;
-        }
-
-        /* MOBILE */
-
-        @media (max-width: 1000px) {
-
-            .stats,
-            .quick-actions {
+        @media(max-width: 900px) {
+            .stats-container,
+            .actions-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 700px) {
-
+        @media(max-width: 600px) {
             .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
+                width: 170px;
             }
 
-            .main {
-                margin-left: 0;
+            .sidebar a {
+                padding: 13px 10px;
+                font-size: 13px;
             }
 
-            .stats,
-            .quick-actions {
+            .main-content {
+                margin-left: 170px;
+                padding: 12px;
+            }
+
+            .stats-container,
+            .actions-grid {
                 grid-template-columns: 1fr;
             }
 
-            .topbar {
+            .welcome {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
@@ -288,338 +228,183 @@
 
 <body>
 
-    <!-- SIDEBAR -->
+<!-- SIDEBAR -->
+<div class="sidebar">
 
-    <aside class="sidebar">
+    <div class="brand">
+        <h2>Medical Store</h2>
+        <small>Management System</small>
+    </div>
 
-        <div class="logo">
-            <h2>Medical Store</h2>
-            <p>Management System</p>
+    <a href="/">🏠 Dashboard</a>
+    <a href="/medicines/">💊 Medicines</a>
+    <a href="/book-medicine/">📦 Book Medicine</a>
+    <a href="/sales/">🛒 New Sale</a>
+    <a href="/sales-history/">📋 Sales History</a>
+    <a href="/billing-history/">🧾 Billing History</a>
+    <a href="/h1-drugs/">⚕️ H1 Drugs</a>
+    <a href="/h1-drug-sale/">💊 Sell H1 Drug</a>
+    <a href="/booking-history/">📋 Booking History</a>
+    <a href="/admin/">⚙️ Admin Panel</a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+    <div class="welcome">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Medical Store Management System</p>
         </div>
 
-        <div class="menu">
+        <strong>Welcome, {{ request.user.username }}!</strong>
+    </div>
 
-            <a href="/">
-                🏠 Dashboard
-            </a>
+    <!-- STATISTICS -->
+    <div class="stats-container">
 
-            <a href="/medicines/">
-                💊 Medicines
-            </a>
-
-            <a href="/book-medicine/">
-                📦 Book Medicine
-            </a>
-
-            <a href="/sales/">
-                🛒 New Sale
-            </a>
-
-            <a href="/sales-history/">
-                📋 Sales History
-            </a>
-
-            <a href="/billing-history/">
-                🧾 Billing History
-            </a>
-
-            <a href="/h1-drugs/">
-                ⚕️ H1 Drugs
-            </a>
-
-            <a href="{% url 'h1_drug_sale' %}">
-    Sell H1 Drug
-</a>
-
-            <a href="/admin/">
-                ⚙️ Admin Panel
-            </a>
-
-            <a href="/logout/">
-                🚪 Logout
-            </a>
-        
-            <a href="/booking-history/">
-    📋 Booking History
-</a>
+        <div class="stat-card">
+            <h3>Total Medicines</h3>
+            <h2>{{ total_medicines }}</h2>
+            <p>Medicines available</p>
         </div>
 
-    </aside>
-
-
-    <!-- MAIN CONTENT -->
-
-    <main class="main">
-
-        <!-- TOP BAR -->
-
-        <div class="topbar">
-
-            <div>
-                <h1>Dashboard</h1>
-                <p>Medical Store Management System</p>
-            </div>
-
-            <div class="welcome">
-                Welcome!
-            </div>
-
+        <div class="stat-card">
+            <h3>Total Sales</h3>
+            <h2>{{ total_sales }}</h2>
+            <p>Sales completed</p>
         </div>
 
-
-        <!-- STATISTICS -->
-
-        <div class="stats">
-
-            <div class="stat-card">
-
-                <h3>Total Medicines</h3>
-
-                <div class="stat-number">
-                    {{ total_medicines }}
-                </div>
-
-                <p>Medicines available</p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Total Sales</h3>
-
-                <div class="stat-number">
-                    {{ total_sales }}
-                </div>
-
-                <p>Sales completed</p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Total Bills</h3>
-
-                <div class="stat-number">
-                    {{ total_bills }}
-                </div>
-
-                <p>Bills generated</p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <h3>Low Stock</h3>
-
-                <div class="stat-number">
-                    {{ low_stock }}
-                </div>
-
-                <p>Medicines need attention</p>
-
-            </div>
-
+        <div class="stat-card">
+            <h3>Total Bills</h3>
+            <h2>{{ total_bills }}</h2>
+            <p>Bills generated</p>
         </div>
 
+        <div class="stat-card">
+            <h3>Low Stock</h3>
+            <h2>{{ low_stock.count }}</h2>
+            <p>Medicines need attention</p>
+        </div>
 
-        <!-- LOW STOCK -->
+    </div>
 
-        <div class="section">
+    <!-- LOW STOCK MEDICINES -->
+    <div class="section">
 
-            <div class="section-header">
+        <div class="section-heading">
+            <h2>Low Stock Medicines</h2>
+            <a href="/medicines/" class="action-btn">View Medicines</a>
+        </div>
 
-                <h2>Low Stock Medicines</h2>
-
-                <a href="/medicines/" class="view-btn">
-                    View Medicines
-                </a>
-
-            </div>
-
-
-            {% if low_stock_medicines %}
-
-            <table>
-
+        <table>
+            <thead>
                 <tr>
                     <th>Medicine</th>
                     <th>Category</th>
                     <th>Stock</th>
                     <th>Expiry Date</th>
                 </tr>
+            </thead>
 
+            <tbody>
                 {% for medicine in low_stock_medicines %}
-
                 <tr>
-
-                    <td>
-                        {{ medicine.name }}
-                    </td>
-
-                    <td>
-                        {{ medicine.category }}
-                    </td>
-
-                    <td class="low">
-                        {{ medicine.stock }}
-                    </td>
-
-                    <td>
-                        {{ medicine.expiry_date }}
-                    </td>
-
+                    <td>{{ medicine.name }}</td>
+                    <td>{{ medicine.category }}</td>
+                    <td class="low">{{ medicine.stock }}</td>
+                    <td>{{ medicine.expiry_date|date:"M. d, Y" }}</td>
                 </tr>
 
+                {% empty %}
+                <tr>
+                    <td colspan="4">No low stock medicines available.</td>
+                </tr>
                 {% endfor %}
+            </tbody>
+        </table>
 
-            </table>
+    </div>
 
-            {% else %}
-
-            <p style="text-align:center; color:#777; margin-top:25px;">
-                All medicines have sufficient stock.
-            </p>
-
-            {% endif %}
-
+    <!-- QUICK ACTIONS -->
+    <div class="section">
+        <div class="section-heading">
+            <h2>Quick Actions</h2>
         </div>
 
-
-        <!-- QUICK ACTIONS -->
-
-        <div class="quick-actions">
-
-
-            <!-- MEDICINES -->
+        <div class="actions-grid">
 
             <div class="action-card">
-
-                <div class="icon">💊</div>
-
+                <div class="card-icon">💊</div>
                 <h3>Medicines</h3>
-
-                <p>
-                    View and manage medicines
-                </p>
-
-                <a href="/medicines/">
-                    Open
-                </a>
-
+                <p>Manage medicine inventory</p>
+                <a href="/medicines/" class="action-btn">View</a>
             </div>
 
-
-            <!-- BOOK MEDICINE -->
-
             <div class="action-card">
-
-                <div class="icon">📦</div>
-
-                <h3>Book Medicine</h3>
-
-                <p>
-                    Book medicines for customers
-                </p>
-
-                <a href="/book-medicine/">
-                    Book Now
-                </a>
-
-            </div>
-
-
-            <!-- NEW SALE -->
-
-            <div class="action-card">
-
-                <div class="icon">🛒</div>
-
+                <div class="card-icon">🛒</div>
                 <h3>New Sale</h3>
-
-                <p>
-                    Create a new medicine sale
-                </p>
-
-                <a href="/sales/">
-                    Create Sale
-                </a>
-
+                <p>Create a new medicine sale</p>
+                <a href="/sales/" class="action-btn">Open</a>
             </div>
-
-
-            <!-- SALES HISTORY -->
 
             <div class="action-card">
-
-                <div class="icon">📋</div>
-
-                <h3>Sales History</h3>
-
-                <p>
-                    View previous sales
-                </p>
-
-                <a href="/sales-history/">
-                    View Sales
-                </a>
-
+                <div class="card-icon">🧾</div>
+                <h3>Billing History</h3>
+                <p>View generated bills</p>
+                <a href="/billing-history/" class="action-btn">View</a>
             </div>
-
-
-            <!-- BILLING -->
 
             <div class="action-card">
-
-                <div class="icon">🧾</div>
-
-                <h3>Billing</h3>
-
-                <p>
-                    View generated bills
-                </p>
-
-                <a href="/billing-history/">
-                    View Bills
-                </a>
-
+                <div class="card-icon">📦</div>
+                <h3>Book Medicine</h3>
+                <p>Book medicines for customers</p>
+                <a href="/book-medicine/" class="action-btn">Book Now</a>
             </div>
+            
+<div class="action-card">
+    <div class="card-icon">⚕️</div>
+    <h3>H1 Drugs</h3>
+    <p>Manage H1 category medicines</p>
+    <a href="/h1-drugs/" class="action-btn">View H1 Drugs</a>
+</div>
 
+<div class="action-card">
+    <div class="card-icon">💊</div>
+    <h3>Sell H1 Drug</h3>
+    <p>Manage H1 drug sales</p>
+    <a href="/h1-drug-sale/" class="action-btn">Sell Now</a>
+</div>
 
-            <!-- H1 DRUGS -->
+<div class="action-card">
+    <div class="card-icon">👥</div>
+    <h3>Member Bills</h3>
+    <p>View separate member bills</p>
+    <a href="/member-bills/" class="action-btn">View Bills</a>
+</div>
 
-            <div class="action-card">
-
-                <div class="icon">⚕️</div>
-
-                <h3>H1 Drugs</h3>
-
-                <p>
-                    Manage H1 drug records
-                </p>
-
-                <a href="/h1-drugs/">
-                    View H1 Drugs
-                </a>
-
-            </div>
-
+<div class="action-card">
+    <div class="card-icon">📋</div>
+    <h3>Booking History</h3>
+    <p>View medicine bookings</p>
+    <a href="/booking-history/" class="action-btn">View History</a>
+</div>
+  
+<!-- GENERAL STORE -->
+<div class="action-card">
+    <div class="card-icon">🛒</div>
+    <h3>General Store</h3>
+    <p>Manage general store products and stock.</p>
+    <a href="{% url 'general_store' %}" class="action-btn">
+        Open General Store
+    </a>
+</div>
 
         </div>
+    </div>
 
-
-        <!-- FOOTER -->
-
-        <div class="footer">
-
-            © 2026 Medical Store Management System
-
-        </div>
-
-    </main>
+</div>
 
 </body>
 </html>
-```

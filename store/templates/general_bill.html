@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>General Store Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f3f5;
+            padding: 30px;
+        }
+        .bill {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border: 2px solid #087f8c;
+            border-radius: 12px;
+        }
+        h2 {
+            text-align: center;
+            color: #087f8c;
+        }
+        .line {
+            padding: 12px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            color: green;
+        }
+        button, a {
+            display: inline-block;
+            margin: 15px 5px 0;
+            padding: 10px 16px;
+            background: #087f8c;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        @media print {
+            button, a {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bill">
+    <h2>GENERAL STORE BILL</h2>
+
+    <div class="line">Bill Number: {{ bill.bill_number }}</div>
+    <div class="line">Customer: {{ bill.customer_name }}</div>
+    <div class="line">Product: {{ bill.product.product_name }}</div>
+    <div class="line">Quantity: {{ bill.quantity }}</div>
+    <div class="line">Price: ₹{{ bill.product.price }}</div>
+    <div class="line total">Total: ₹{{ bill.total_price }}</div>
+    <div class="line">Date: {{ bill.bill_date|date:"d-m-Y H:i" }}</div>
+
+    <button onclick="window.print()">Print Bill</button>
+
+    <a href="{% url 'general_sales' %}">New Sale</a>
+    <a href="{% url 'general_store' %}">Dashboard</a>
+</div>
+
+</body>
+</html>

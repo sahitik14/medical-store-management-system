@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>General Sales History</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 25px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: #243b55; color: white; }
+        a { display: inline-block; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>General Store Sales History</h2>
+    <a href="{% url 'home' %}">Dashboard</a>
+
+    <table>
+        <tr>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Date</th>
+        </tr>
+
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.customer_name }}</td>
+            <td>{{ sale.product.product_name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>₹{{ sale.total_price }}</td>
+            <td>{{ sale.sale_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No sales available</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

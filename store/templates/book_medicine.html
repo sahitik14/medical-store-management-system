@@ -1,25 +1,27 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Book Medicine</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Medicine - Medical Store Management</title>
 
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
             font-family: Arial, sans-serif;
-            background: #f4f9f9;
+            background: #f4f7fb;
+            padding: 30px;
         }
 
-        .navbar {
-            background: #087f8c;
-            color: white;
-            padding: 20px 40px;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 650px;
-            margin: 40px auto;
+        .booking-container {
+            max-width: 600px;
+            margin: 30px auto;
             background: white;
             padding: 30px;
             border-radius: 12px;
@@ -27,138 +29,153 @@
         }
 
         h1 {
-            text-align: center;
-            color: #087f8c;
+            color: #17365d;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 25px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
+            margin-top: 16px;
+            margin-bottom: 7px;
             font-weight: bold;
+            color: #333;
         }
 
-        input, select, textarea {
+        input, textarea {
             width: 100%;
             padding: 12px;
-            margin-top: 7px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            box-sizing: border-box;
+            font-size: 15px;
         }
 
         textarea {
-            height: 100px;
-            resize: none;
+            height: 90px;
+            resize: vertical;
         }
 
-        button {
+        .selected {
+            background: #eaf7f7;
+            font-weight: bold;
+        }
+
+        .book-btn {
             width: 100%;
+            padding: 13px;
             margin-top: 25px;
-            padding: 14px;
             background: #087f8c;
             color: white;
             border: none;
-            border-radius: 7px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #056873;
+        .book-btn:hover {
+            background: #05636d;
         }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #087f8c;
+        .back-btn {
+            display: inline-block;
+            margin-top: 18px;
+            color: #17365d;
             text-decoration: none;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #b00020;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
         }
     </style>
 </head>
+<script>
+    const price = Number("{{ selected_medicine.price|default:0 }}");
+
+    const quantityInput = document.querySelector(
+        'input[name="quantity"]'
+    );
+
+    const totalAmount = document.getElementById("total_amount");
+
+    quantityInput.addEventListener("input", function () {
+        const quantity = Number(this.value) || 0;
+        const total = price * quantity;
+
+        totalAmount.value = "₹" + total.toFixed(2);
+    });
+</script>
 
 <body>
 
-<div class="navbar">
-    <h2>Medical Store Management System</h2>
-</div>
-
-<div class="container">
+<div class="booking-container">
 
     <h1>Book Medicine</h1>
+    <p class="subtitle">Medical Store Management System</p>
 
-    <form method="POST">
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
 
-        {% csrf_token %}
+    {% if selected_medicine %}
 
-        <label>Customer Name</label>
-        <input
-            type="text"
-            name="customer_name"
-            placeholder="Enter customer name"
-            required
-        >
+        <form method="POST">
+            {% csrf_token %}
 
-        <label>Mobile Number</label>
-        <input
-            type="tel"
-            name="mobile"
-            placeholder="Enter mobile number"
-            required
-        >
+            <label>Selected Medicine</label>
 
-        <label>Email Address</label>
+            <input
+                type="text"
+                class="selected"
+                value="{{ selected_medicine.name }} - ₹{{ selected_medicine.price }}"
+                readonly
+            >
+            
+            <input
+                type="hidden"
+                name="medicine"
+                value="{{ selected_medicine.id }}"
+            >
 
-<input
-    type="email"
-    name="email"
-    placeholder="Enter email address"
-    required
->
-   
-        <label>Address</label>
-        <textarea
-            name="address"
-            placeholder="Enter delivery address"
-            required
-        ></textarea>
 
-        <label>Select Medicine</label>
+            <label>Customer Name</label>
+            <input type="text" name="customer_name" required>
 
-        <select name="medicine" required>
+            <label>Mobile Number</label>
+            <input type="tel" name="mobile" required>
 
-            <option value="">
-                -- Select Medicine --
-            </option>
+            <label>Email</label>
+            <input type="email" name="email">
 
-            {% for medicine in medicines %}
+            <label>Address</label>
+            <textarea name="address" required></textarea>
 
-            <option value="{{ medicine.id }}">
-                {{ medicine.name }} - ₹{{ medicine.price }}
-                (Stock: {{ medicine.stock }})
-            </option>
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="1"
+                   max="{{ selected_medicine.stock }}" required>
+            <label>Total Amount</label>
+<input type="text" id="total_amount" value="₹0.00" readonly>
 
-            {% endfor %}
+            <button type="submit" class="book-btn">
+                Confirm Booking
+            </button>
+        </form>
 
-        </select>
+    {% else %}
 
-        <label>Quantity</label>
+        <p>Please select a medicine from the Available Medicines page.</p>
 
-        <input
-            type="number"
-            name="quantity"
-            min="1"
-            required
-        >
+    {% endif %}
 
-        <button type="submit">
-            Book Medicine
-        </button>
-
-    </form>
-
-    <a href="/" class="back">
-        ← Back to Dashboard
+    <a href="{% url 'medicines' %}" class="back-btn">
+        ← Back to Medicines
     </a>
 
 </div>

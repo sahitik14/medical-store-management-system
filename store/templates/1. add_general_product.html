@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add General Product</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 30px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px #00000015;
+        }
+
+        h2 {
+            color: #243b55;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        button, a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 11px 16px;
+            background: #243b55;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <h2>Add General Product</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Product Name</label>
+        <input type="text" name="product_name" required>
+
+        <label>Category</label>
+        <input type="text" name="category" required>
+
+        <label>Brand</label>
+        <input type="text" name="brand">
+
+        <label>Price</label>
+        <input type="number" name="price" step="0.01" min="0.01" required>
+
+        <label>Stock</label>
+        <input type="number" name="stock" min="0" required>
+
+        <label>Product Image</label>
+        <input type="file" name="image" accept="image/*">
+
+        <button type="submit">Save Product</button>
+
+        <a href="{% url 'general_store' %}">Back</a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

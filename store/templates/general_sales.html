@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>General Store Sales</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 30px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 12px; }
+        h2 { text-align: center; color: #243b55; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, select { width: 100%; padding: 11px; margin-top: 7px; box-sizing: border-box; }
+        button, a { display: inline-block; margin-top: 20px; padding: 11px 16px; background: #243b55; color: white; border: none; border-radius: 6px; text-decoration: none; cursor: pointer; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>General Store Sales</h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Customer Name</label>
+        <input type="text" name="customer_name" required>
+
+        <label>Select Product</label>
+        <select name="product" required>
+            <option value="">Select Product</option>
+            {% for product in products %}
+                <option value="{{ product.id }}">
+                    {{ product.product_name }} - ₹{{ product.price }} (Stock: {{ product.stock }})
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Quantity</label>
+        <input type="number" name="quantity" min="1" required>
+
+        <button type="submit">Generate Bill</button>
+        <a href="{% url 'general_store' %}">Back</a>
+    </form>
+</div>
+</body>
+</html>

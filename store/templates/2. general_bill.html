@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>General Store Bill</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; padding: 30px; }
+        .bill { max-width: 550px; margin: auto; background: white; padding: 30px; border-radius: 12px; }
+        h2 { text-align: center; color: #243b55; }
+        .line { border-bottom: 1px dashed #aaa; padding: 12px 0; }
+        .total { font-size: 22px; font-weight: bold; }
+        button, a { padding: 10px 16px; margin-top: 20px; background: #243b55; color: white; border: none; border-radius: 5px; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="bill">
+    <h2>GENERAL STORE BILL</h2>
+
+    <div class="line">Bill Number: {{ bill.bill_number }}</div>
+    <div class="line">Customer: {{ bill.customer_name }}</div>
+    <div class="line">Product: {{ bill.product.product_name }}</div>
+    <div class="line">Quantity: {{ bill.quantity }}</div>
+    <div class="line">Price: ₹{{ bill.product.price }}</div>
+    <div class="line total">Total: ₹{{ bill.total_price }}</div>
+    <div class="line">Date: {{ bill.bill_date }}</div>
+
+    <button onclick="window.print()">Print Bill</button>
+    <a href="{% url 'general_sales' %}">New Sale</a>
+    <a href="{% url 'home' %}">Dashboard</a>
+</div>
+</body>
+</html>
