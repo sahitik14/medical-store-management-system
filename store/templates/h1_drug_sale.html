@@ -1,6 +1,6 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
@@ -42,7 +42,8 @@
             font-weight: bold;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             box-sizing: border-box;
             padding: 12px;
@@ -79,74 +80,57 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>H1 Drug Sale</h1>
+        <h1>H1 Drug Sale</h1>
 
-    <div class="subtitle">
-        Medical Store Management System
-    </div>
+        <div class="subtitle">
+            Medical Store Management System
+        </div>
 
-    <form method="POST">
+        <form method="POST">
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-        <label>Customer Name</label>
-        <input
-            type="text"
-            name="customer_name"
-            placeholder="Enter customer name"
-            required
-        >
+            <label>Customer Name</label>
+            <input type="text" name="customer_name" placeholder="Enter customer name" required>
 
-        <label>Select H1 Drug</label>
+            <label>Select H1 Drug</label>
 
-        <select name="drug" required>
-            <option value="">-- Select H1 Drug --</option>
+            <select name="drug" required>
+                <option value="">-- Select H1 Drug --</option>
 
-            {% for drug in drugs %}
+                {% for drug in drugs %}
                 <option value="{{ drug.id }}">
                     {{ drug.drug_name }}
                     - Batch: {{ drug.batch_number }}
                     - Stock: {{ drug.quantity_received }}
                 </option>
-            {% empty %}
+                {% empty %}
                 <option value="">No H1 drugs available</option>
-            {% endfor %}
+                {% endfor %}
 
-        </select>
+            </select>
 
-        <label>Quantity</label>
-        <input
-            type="number"
-            name="quantity"
-            min="1"
-            placeholder="Enter quantity"
-            required
-        >
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="1" placeholder="Enter quantity" required>
 
-        <label>Sale Price</label>
-        <input
-            type="number"
-            name="sale_price"
-            step="0.01"
-            min="0"
-            placeholder="Enter sale price"
-            required
-        >
+            <label>Sale Price</label>
+            <input type="number" name="sale_price" step="0.01" min="0" placeholder="Enter sale price" required>
 
-        <button type="submit">
-            Sell H1 Drug & Generate Bill
-        </button>
+            <button type="submit">
+                Sell H1 Drug & Generate Bill
+            </button>
 
-    </form>
+        </form>
 
-    <a href="/" class="back">
-        ← Back to Home
-    </a>
+        <a href="/" class="back">
+            ← Back to Home
+        </a>
 
-</div>
+    </div>
 
 </body>
+
 </html>
 ```

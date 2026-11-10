@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +18,42 @@
             background: #087f8c;
             padding: 18px 50px;
             color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .navbar h2 {
             margin: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 7px 14px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-logout {
+            background: #e63946;
+        }
+
+        .nav-logout:hover {
+            background: #d62828;
         }
 
         .container {
@@ -30,7 +63,7 @@
             background: white;
             padding: 35px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -46,7 +79,8 @@
             font-weight: bold;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -95,36 +129,41 @@
 </head>
 <script>
 
-function showMedicineImage() {
+    function showMedicineImage() {
 
-    var select = document.getElementById("medicineSelect");
+        var select = document.getElementById("medicineSelect");
 
-    var selectedOption = select.options[select.selectedIndex];
+        var selectedOption = select.options[select.selectedIndex];
 
-    var image = selectedOption.getAttribute("data-image");
+        var image = selectedOption.getAttribute("data-image");
 
-    var preview = document.getElementById("medicinePreview");
+        var preview = document.getElementById("medicinePreview");
 
-    var medicineImage = document.getElementById("medicineImage");
+        var medicineImage = document.getElementById("medicineImage");
 
-    if (image) {
+        if (image) {
 
-        medicineImage.src = image;
+            medicineImage.src = image;
 
-        preview.style.display = "block";
+            preview.style.display = "block";
 
-    } else {
+        } else {
 
-        preview.style.display = "none";
+            preview.style.display = "none";
 
+        }
     }
-}
 
 </script>
+
 <body>
 
     <div class="navbar">
         <h2>Medical Store Management System</h2>
+        <div class="nav-actions">
+            <a href="/" class="nav-link">🏠 Dashboard</a>
+            <a href="{% url 'logout' %}" class="nav-link nav-logout">🚪 Logout</a>
+        </div>
     </div>
 
     <div class="container">
@@ -136,49 +175,35 @@ function showMedicineImage() {
 
             <label>Customer Name</label>
 
-            <input
-                type="text"
-                name="customer_name"
-                placeholder="Enter customer name"
-                required
-            >
+            <input type="text" name="customer_name" placeholder="Enter customer name" required>
 
             <label>Select Medicine</label>
 
-             <select name="medicine" id="medicineSelect" required onchange="showMedicineImage()">
+            <select name="medicine" id="medicineSelect" required onchange="showMedicineImage()">
 
-    <option value="">-- Select Medicine --</option>
+                <option value="">-- Select Medicine --</option>
 
-    {% for medicine in medicines %}
+                {% for medicine in medicines %}
 
-        <option value="{{ medicine.id }}"
-                data-image="{% if medicine.image %}{{ medicine.image.url }}{% endif %}">
-            {{ medicine.name }} - ₹{{ medicine.price }}
-            (Stock: {{ medicine.stock }})
-        </option>
+                <option value="{{ medicine.id }}"
+                    data-image="{% if medicine.image %}{{ medicine.image.url }}{% endif %}">
+                    {{ medicine.name }} - ₹{{ medicine.price }}
+                    (Stock: {{ medicine.stock }})
+                </option>
 
-    {% endfor %}
+                {% endfor %}
 
-</select>
+            </select>
 
-<div id="medicinePreview" style="display:none; text-align:center; margin-top:20px;">
+            <div id="medicinePreview" style="display:none; text-align:center; margin-top:20px;">
 
-    <img id="medicineImage"
-         src=""
-         alt="Medicine Image"
-         width="120"
-         height="120"
-         style="object-fit:cover; border-radius:10px; border:2px solid #087f8c;">
+                <img id="medicineImage" src="" alt="Medicine Image" width="120" height="120"
+                    style="object-fit:cover; border-radius:10px; border:2px solid #087f8c;">
 
-</div>
+            </div>
             <label>Quantity</label>
 
-            <input
-                type="number"
-                name="quantity"
-                min="1"
-                required
-            >
+            <input type="number" name="quantity" min="1" required>
 
             <button type="submit">
                 Generate Bill
@@ -191,4 +216,5 @@ function showMedicineImage() {
     </div>
 
 </body>
+
 </html>

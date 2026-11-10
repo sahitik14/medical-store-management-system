@@ -79,6 +79,50 @@
             color: #777;
         }
 
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-greeting {
+            font-size: 15px;
+            color: #333;
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e63946;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(230, 57, 70, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d62828;
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .sidebar a.sidebar-logout {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffcccc;
+            font-weight: bold;
+        }
+
+        .sidebar a.sidebar-logout:hover {
+            background: rgba(230, 57, 70, 0.3);
+            color: white;
+        }
+
         .stats-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -246,6 +290,7 @@
     <a href="/h1-drug-sale/">💊 Sell H1 Drug</a>
     <a href="/booking-history/">📋 Booking History</a>
     <a href="/admin/">⚙️ Admin Panel</a>
+    <a href="{% url 'logout' %}" class="sidebar-logout">🚪 Logout</a>
 
 </div>
 
@@ -258,7 +303,17 @@
             <p>Medical Store Management System</p>
         </div>
 
-        <strong>Welcome, {{ request.user.username }}!</strong>
+        <div class="user-section">
+            <span class="user-greeting">Welcome, <strong>{{ request.user.username }}</strong>!</span>
+            <a href="{% url 'logout' %}" class="logout-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </a>
+        </div>
     </div>
 
     <!-- STATISTICS -->

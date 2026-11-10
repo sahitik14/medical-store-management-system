@@ -19,6 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Customize Django Admin Portal
+admin.site.site_header = "Medical Store Administration"
+admin.site.site_title = "Medical Store Admin Portal"
+admin.site.index_title = "Store Management & Control Panel"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),

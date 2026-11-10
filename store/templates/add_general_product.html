@@ -1,6 +1,6 @@
-```html
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add General Store Product</title>
     <style>
@@ -9,6 +9,7 @@
             background: #f3f5f9;
             padding: 30px;
         }
+
         .container {
             max-width: 500px;
             margin: 30px auto;
@@ -17,11 +18,14 @@
             border-radius: 12px;
             box-shadow: 0 3px 12px #0002;
         }
+
         h2 {
             text-align: center;
             color: #243b55;
         }
-        input, select {
+
+        input,
+        select {
             width: 100%;
             padding: 11px;
             margin: 9px 0 16px;
@@ -29,6 +33,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
         }
+
         button {
             width: 100%;
             padding: 12px;
@@ -38,6 +43,7 @@
             border-radius: 6px;
             cursor: pointer;
         }
+
         .back {
             display: block;
             text-align: center;
@@ -45,38 +51,40 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Add General Store Product</h2>
+    <div class="container">
+        <h2>Add General Store Product</h2>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <label>Product Name</label>
-        <input type="text" name="product_name" required>
+            <label>Product Name</label>
+            <input type="text" name="product_name" required>
 
-        <label>Category</label>
-        <input type="text" name="category" required>
+            <label>Category</label>
+            <input type="text" name="category" required>
 
-        <label>Brand</label>
-        <input type="text" name="brand">
+            <label>Brand</label>
+            <input type="text" name="brand">
 
-        <label>Price</label>
-        <input type="number" name="price" step="0.01" min="0.01" required>
+            <label>Price</label>
+            <input type="number" name="price" step="0.01" min="0.01" required>
 
-        <label>Stock</label>
-        <input type="number" name="stock" min="0" required>
+            <label>Stock</label>
+            <input type="number" name="stock" min="0" required>
 
-        <label>Product Image</label>
-        <input type="file" name="image" accept="image/*">
+            <label>Product Image</label>
+            <input type="file" name="image" accept="image/*">
 
-        <button type="submit">Add Product</button>
-    </form>
+            <button type="submit">Add Product</button>
+        </form>
 
-    <a class="back" href="{% url 'general_store' %}">Back to General Store</a>
-</div>
+        <a class="back" href="{% url 'general_store' %}">Back to General Store</a>
+    </div>
 
 </body>
+
 </html>
 ```

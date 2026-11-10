@@ -15,6 +15,34 @@ from .models import (
 
 
 # =====================================
+# MEDICAL STORE ADMIN CONFIGURATION
+# =====================================
+admin.site.site_header = "Medical Store Administration"
+admin.site.site_title = "Medical Store Admin Portal"
+admin.site.index_title = "Store Management & Control Panel"
+
+original_admin_index = admin.site.index
+
+def custom_admin_index(request, extra_context=None):
+    from .models import Medicine, Sale, Bill, MedicineBooking, GeneralProduct, H1Drug
+    extra = extra_context or {}
+    try:
+        extra["total_medicines"] = Medicine.objects.count()
+        extra["low_stock_count"] = Medicine.objects.filter(stock__lte=10).count()
+        extra["total_sales"] = Sale.objects.count()
+        extra["total_bills"] = Bill.objects.count()
+        extra["total_bookings"] = MedicineBooking.objects.count()
+        extra["pending_bookings"] = MedicineBooking.objects.filter(status="Pending").count()
+        extra["total_h1_drugs"] = H1Drug.objects.count()
+        extra["total_general"] = GeneralProduct.objects.count()
+    except Exception:
+        pass
+    return original_admin_index(request, extra_context=extra)
+
+admin.site.index = custom_admin_index
+
+
+# =====================================
 # MEDICAL STORE ADMIN
 # =====================================
 

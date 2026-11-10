@@ -1,6 +1,6 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +18,42 @@
             background: #087f8c;
             color: white;
             padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .navbar h2 {
             margin: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 7px 14px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-logout {
+            background: #e63946;
+        }
+
+        .nav-logout:hover {
+            background: #d62828;
         }
 
         .container {
@@ -77,13 +109,13 @@
             border-radius: 12px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: 0.3s;
         }
 
         .medicine-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
         }
 
         .medicine-image {
@@ -190,6 +222,10 @@
     <!-- Navbar -->
     <div class="navbar">
         <h2>Medical Store Management System</h2>
+        <div class="nav-actions">
+            <a href="/" class="nav-link">🏠 Dashboard</a>
+            <a href="{% url 'logout' %}" class="nav-link nav-logout">🚪 Logout</a>
+        </div>
     </div>
 
     <!-- Main Container -->
@@ -200,12 +236,7 @@
         <!-- Search -->
         <form method="GET" class="search-box">
 
-            <input
-                type="text"
-                name="search"
-                value="{{ search }}"
-                placeholder="Search medicine..."
-            >
+            <input type="text" name="search" value="{{ search }}" placeholder="Search medicine...">
 
             <button type="submit">
                 Search
@@ -223,17 +254,13 @@
                 <!-- Medicine Image -->
                 {% if medicine.image %}
 
-                    <img
-                        src="{{ medicine.image.url }}"
-                        alt="{{ medicine.name }}"
-                        class="medicine-image"
-                    >
+                <img src="{{ medicine.image.url }}" alt="{{ medicine.name }}" class="medicine-image">
 
                 {% else %}
 
-                    <div class="no-image">
-                        No Image
-                    </div>
+                <div class="no-image">
+                    No Image
+                </div>
 
                 {% endif %}
 
@@ -274,17 +301,15 @@
                 <!-- Book Medicine Button -->
                 {% if medicine.stock > 0 %}
 
-                    <a
-href="{% url 'book_medicine' %}?medicine={{ medicine.id }}"                        class="book-btn"
-                    >
-                        Book Medicine
-                    </a>
+                <a href="{% url 'book_medicine' %}?medicine={{ medicine.id }}" class="book-btn">
+                    Book Medicine
+                </a>
 
                 {% else %}
 
-                    <p style="color:red; font-weight:bold;">
-                        Out of Stock
-                    </p>
+                <p style="color:red; font-weight:bold;">
+                    Out of Stock
+                </p>
 
                 {% endif %}
 
@@ -292,9 +317,9 @@ href="{% url 'book_medicine' %}?medicine={{ medicine.id }}"                     
 
             {% empty %}
 
-                <p class="empty-message">
-                    No medicines available.
-                </p>
+            <p class="empty-message">
+                No medicines available.
+            </p>
 
             {% endfor %}
 
@@ -308,4 +333,5 @@ href="{% url 'book_medicine' %}?medicine={{ medicine.id }}"                     
     </div>
 
 </body>
+
 </html>

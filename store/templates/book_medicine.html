@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,169 +16,493 @@
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
-            padding: 30px;
+            min-height: 100vh;
         }
 
-        .booking-container {
-            max-width: 600px;
-            margin: 30px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            color: #17365d;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #777;
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-top: 16px;
-            margin-bottom: 7px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-        }
-
-        textarea {
-            height: 90px;
-            resize: vertical;
-        }
-
-        .selected {
-            background: #eaf7f7;
-            font-weight: bold;
-        }
-
-        .book-btn {
-            width: 100%;
-            padding: 13px;
-            margin-top: 25px;
+        /* Top Navbar */
+        .navbar {
             background: #087f8c;
             color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .book-btn:hover {
-            background: #05636d;
+        .navbar h2 {
+            margin: 0;
+            font-size: 20px;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 18px;
-            color: #17365d;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: white;
             text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 7px 14px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-logout {
+            background: #e63946;
+        }
+
+        .nav-logout:hover {
+            background: #d62828;
+        }
+
+        /* Main Container */
+        .page-container {
+            width: 90%;
+            max-width: 680px;
+            margin: 35px auto 50px;
+        }
+
+        .booking-card {
+            background: white;
+            padding: 35px 40px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 18px;
+        }
+
+        .card-header h1 {
+            color: #087f8c;
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .card-header p {
+            color: #6c757d;
+            font-size: 14px;
         }
 
         .error {
             background: #ffe5e5;
             color: #b00020;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 15px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            border-left: 4px solid #b00020;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #e63946;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            background: #fff;
+            color: #1e293b;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #087f8c;
+            box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.15);
+        }
+
+        textarea {
+            height: 85px;
+            resize: vertical;
+        }
+
+        /* Medicine Preview Box */
+        .medicine-preview {
+            display: none;
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .preview-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1.5px solid #087f8c;
+            background: white;
+        }
+
+        .preview-details {
+            flex: 1;
+        }
+
+        .preview-name {
+            font-weight: bold;
+            color: #087f8c;
+            font-size: 16px;
+        }
+
+        .preview-meta {
+            font-size: 13px;
+            color: #475569;
+            margin-top: 4px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .badge-stock {
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .badge-price {
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        /* Amount Calculation Box */
+        .total-box {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 22px 0;
+        }
+
+        .total-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .total-display {
+            font-size: 22px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        /* Submit Button */
+        .book-btn {
+            width: 100%;
+            padding: 14px;
+            background: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(8, 127, 140, 0.3);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .book-btn:hover {
+            background: #066873;
+            transform: translateY(-1px);
+        }
+
+        .book-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-footer {
+            margin-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-link {
+            color: #087f8c;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #055059;
+            text-decoration: underline;
+        }
+
+        .empty-alert {
+            text-align: center;
+            padding: 30px 20px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            .booking-card {
+                padding: 25px 20px;
+            }
+            .medicine-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+            .form-footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
         }
     </style>
 </head>
-<script>
-    const price = Number("{{ selected_medicine.price|default:0 }}");
-
-    const quantityInput = document.querySelector(
-        'input[name="quantity"]'
-    );
-
-    const totalAmount = document.getElementById("total_amount");
-
-    quantityInput.addEventListener("input", function () {
-        const quantity = Number(this.value) || 0;
-        const total = price * quantity;
-
-        totalAmount.value = "₹" + total.toFixed(2);
-    });
-</script>
 
 <body>
 
-<div class="booking-container">
+    <!-- TOP NAVBAR -->
+    <div class="navbar">
+        <h2>Medical Store Management System</h2>
+        <div class="nav-actions">
+            <a href="/" class="nav-link">🏠 Dashboard</a>
+            <a href="{% url 'medicines' %}" class="nav-link">💊 Medicines</a>
+            <a href="{% url 'booking_history' %}" class="nav-link">📋 Booking History</a>
+            <a href="{% url 'logout' %}" class="nav-link nav-logout">🚪 Logout</a>
+        </div>
+    </div>
 
-    <h1>Book Medicine</h1>
-    <p class="subtitle">Medical Store Management System</p>
+    <!-- MAIN CONTAINER -->
+    <div class="page-container">
+        <div class="booking-card">
 
-    {% if error %}
-        <div class="error">{{ error }}</div>
-    {% endif %}
+            <div class="card-header">
+                <h1>📦 Book Medicine</h1>
+                <p>Reserve medicines for customers with home delivery or store pickup</p>
+            </div>
 
-    {% if selected_medicine %}
+            {% if error %}
+                <div class="error">⚠️ {{ error }}</div>
+            {% endif %}
 
-        <form method="POST">
-            {% csrf_token %}
+            {% if medicines %}
+                <form method="POST" id="bookingForm">
+                    {% csrf_token %}
 
-            <label>Selected Medicine</label>
+                    <!-- Medicine Selection Dropdown -->
+                    <div class="form-group">
+                        <label for="medicineSelect">Select Medicine <span class="required">*</span></label>
+                        <select name="medicine" id="medicineSelect" required onchange="updateMedicineDetails()">
+                            <option value="" disabled {% if not selected_medicine %}selected{% endif %}>
+                                -- Choose a Medicine from Stock --
+                            </option>
+                            {% for med in medicines %}
+                                <option value="{{ med.id }}"
+                                        data-price="{{ med.price }}"
+                                        data-stock="{{ med.stock }}"
+                                        data-name="{{ med.name }}"
+                                        data-category="{{ med.category }}"
+                                        data-image="{% if med.image %}{{ med.image.url }}{% endif %}"
+                                        {% if selected_medicine and selected_medicine.id == med.id %}selected{% endif %}>
+                                    {{ med.name }} — ₹{{ med.price }} (In Stock: {{ med.stock }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            <input
-                type="text"
-                class="selected"
-                value="{{ selected_medicine.name }} - ₹{{ selected_medicine.price }}"
-                readonly
-            >
-            
-            <input
-                type="hidden"
-                name="medicine"
-                value="{{ selected_medicine.id }}"
-            >
+                    <!-- Medicine Preview Card -->
+                    <div class="medicine-preview" id="medicinePreview">
+                        <img id="previewImg" class="preview-img" src="" alt="Medicine Image" style="display:none;">
+                        <div class="preview-details">
+                            <div class="preview-name" id="previewName"></div>
+                            <div class="preview-meta">
+                                <span>Category: <strong id="previewCategory"></strong></span>
+                                <span>Unit Price: <span class="badge-price" id="previewPrice"></span></span>
+                                <span>Stock: <span class="badge-stock" id="previewStock"></span></span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Customer Information -->
+                    <div class="form-group">
+                        <label for="customer_name">Customer Name <span class="required">*</span></label>
+                        <input type="text" id="customer_name" name="customer_name" placeholder="Enter customer full name" required>
+                    </div>
 
-            <label>Customer Name</label>
-            <input type="text" name="customer_name" required>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number <span class="required">*</span></label>
+                        <input type="tel" id="mobile" name="mobile" placeholder="e.g. 9876543210" pattern="[0-9]{10,15}" title="Enter a valid mobile number (10-15 digits)" required>
+                    </div>
 
-            <label>Mobile Number</label>
-            <input type="tel" name="mobile" required>
+                    <div class="form-group">
+                        <label for="email">Email Address <small style="color: #64748b; font-weight: normal;">(Optional)</small></label>
+                        <input type="email" id="email" name="email" placeholder="customer@example.com">
+                    </div>
 
-            <label>Email</label>
-            <input type="email" name="email">
+                    <div class="form-group">
+                        <label for="address">Delivery / Contact Address <span class="required">*</span></label>
+                        <textarea id="address" name="address" placeholder="Enter customer street address, landmark, city" required></textarea>
+                    </div>
 
-            <label>Address</label>
-            <textarea name="address" required></textarea>
+                    <!-- Quantity Input -->
+                    <div class="form-group">
+                        <label for="quantity">Quantity <span class="required">*</span></label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required oninput="calculateTotal()">
+                        <small id="stockNotice" style="color: #64748b; margin-top: 5px; display: block;"></small>
+                    </div>
 
-            <label>Quantity</label>
-            <input type="number" name="quantity" min="1"
-                   max="{{ selected_medicine.stock }}" required>
-            <label>Total Amount</label>
-<input type="text" id="total_amount" value="₹0.00" readonly>
+                    <!-- Live Total Calculation -->
+                    <div class="total-box">
+                        <span class="total-label">Total Amount Payable:</span>
+                        <span class="total-display" id="totalDisplay">₹0.00</span>
+                    </div>
 
-            <button type="submit" class="book-btn">
-                Confirm Booking
-            </button>
-        </form>
+                    <button type="submit" class="book-btn">
+                        Confirm & Reserve Booking
+                    </button>
+                </form>
 
-    {% else %}
+            {% else %}
+                <div class="empty-alert">
+                    <p style="font-size: 17px; margin-bottom: 15px;">⚠️ No medicines are currently in stock for booking.</p>
+                    <a href="{% url 'medicines' %}" class="footer-link">Check Available Medicines</a>
+                </div>
+            {% endif %}
 
-        <p>Please select a medicine from the Available Medicines page.</p>
+            <div class="form-footer">
+                <a href="{% url 'medicines' %}" class="footer-link">← Browse All Medicines</a>
+                <a href="/" class="footer-link">🏠 Back to Dashboard</a>
+            </div>
 
-    {% endif %}
+        </div>
+    </div>
 
-    <a href="{% url 'medicines' %}" class="back-btn">
-        ← Back to Medicines
-    </a>
+    <!-- Client-side Calculation & Preview Script -->
+    <script>
+        function updateMedicineDetails() {
+            const select = document.getElementById("medicineSelect");
+            const preview = document.getElementById("medicinePreview");
+            const previewImg = document.getElementById("previewImg");
+            const previewName = document.getElementById("previewName");
+            const previewCategory = document.getElementById("previewCategory");
+            const previewPrice = document.getElementById("previewPrice");
+            const previewStock = document.getElementById("previewStock");
+            const quantityInput = document.getElementById("quantity");
+            const stockNotice = document.getElementById("stockNotice");
 
-</div>
+            if (!select || select.selectedIndex < 0) return;
 
+            const selectedOption = select.options[select.selectedIndex];
+            if (!selectedOption || !selectedOption.value) {
+                if (preview) preview.style.display = "none";
+                return;
+            }
+
+            const price = parseFloat(selectedOption.getAttribute("data-price")) || 0;
+            const stock = parseInt(selectedOption.getAttribute("data-stock"), 10) || 0;
+            const name = selectedOption.getAttribute("data-name") || "";
+            const category = selectedOption.getAttribute("data-category") || "General";
+            const imageUrl = selectedOption.getAttribute("data-image");
+
+            // Update details preview
+            if (previewName) previewName.textContent = name;
+            if (previewCategory) previewCategory.textContent = category;
+            if (previewPrice) previewPrice.textContent = "₹" + price.toFixed(2);
+            if (previewStock) previewStock.textContent = stock + " units";
+
+            if (imageUrl) {
+                previewImg.src = imageUrl;
+                previewImg.style.display = "block";
+            } else {
+                previewImg.style.display = "none";
+            }
+
+            if (preview) preview.style.display = "flex";
+
+            // Update quantity constraints
+            if (quantityInput) {
+                quantityInput.max = stock;
+                if (parseInt(quantityInput.value, 10) > stock) {
+                    quantityInput.value = stock;
+                }
+                if (parseInt(quantityInput.value, 10) < 1) {
+                    quantityInput.value = 1;
+                }
+            }
+
+            if (stockNotice) {
+                stockNotice.textContent = "Maximum available stock for booking: " + stock + " units";
+            }
+
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const select = document.getElementById("medicineSelect");
+            const quantityInput = document.getElementById("quantity");
+            const totalDisplay = document.getElementById("totalDisplay");
+
+            if (!select || select.selectedIndex < 0) return;
+
+            const selectedOption = select.options[select.selectedIndex];
+            if (!selectedOption || !selectedOption.value) {
+                if (totalDisplay) totalDisplay.textContent = "₹0.00";
+                return;
+            }
+
+            const price = parseFloat(selectedOption.getAttribute("data-price")) || 0;
+            const stock = parseInt(selectedOption.getAttribute("data-stock"), 10) || 0;
+            let qty = parseInt(quantityInput.value, 10) || 0;
+
+            if (qty > stock) {
+                qty = stock;
+                quantityInput.value = stock;
+            }
+
+            const total = price * qty;
+            if (totalDisplay) {
+                totalDisplay.textContent = "₹" + total.toFixed(2);
+            }
+        }
+
+        // Initialize on DOM load
+        document.addEventListener("DOMContentLoaded", function () {
+            updateMedicineDetails();
+        });
+    </script>
 </body>
 </html>

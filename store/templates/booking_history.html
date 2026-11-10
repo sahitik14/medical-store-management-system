@@ -22,6 +22,42 @@
             background: #087f8c;
             color: white;
             padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 7px 14px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            transition: background 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-logout {
+            background: #e63946;
+        }
+
+        .nav-logout:hover {
+            background: #d62828;
         }
 
         .container {
@@ -83,11 +119,11 @@
 <body>
 
     <div class="navbar">
-
-        <h2>
-            Medical Store Management System
-        </h2>
-
+        <h2>Medical Store Management System</h2>
+        <div class="nav-actions">
+            <a href="/" class="nav-link">🏠 Dashboard</a>
+            <a href="{% url 'logout' %}" class="nav-link nav-logout">🚪 Logout</a>
+        </div>
     </div>
 
 
